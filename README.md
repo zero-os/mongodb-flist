@@ -1,2 +1,2 @@
-# mongodb-flist
+# MongoDB flist
 MongoDB flist buildscripts
