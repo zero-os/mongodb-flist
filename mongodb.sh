@@ -7,9 +7,6 @@ apt-get install -y build-essential build-essential curl python-pip python-dev bu
 apt-get install -y build-essential libssl-dev libffi-dev python3-dev
 apt-get install -y libboost-filesystem-dev libboost-program-options-dev libboost-system-dev libboost-thread-dev libcurl4-openssl-dev
 
-export LC_ALL="en_US.UTF-8"
-export LC_CTYPE="en_US.UTF-8"
-
 git clone https://github.com/mongodb/mongo.git
 
 cd mongo
