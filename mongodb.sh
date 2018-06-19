@@ -7,6 +7,8 @@ apt-get install -y build-essential build-essential curl python-pip python-dev bu
 apt-get install -y build-essential libssl-dev libffi-dev python3-dev
 apt-get install -y libboost-filesystem-dev libboost-program-options-dev libboost-system-dev libboost-thread-dev libcurl4-openssl-dev
 
+echo en_US.UTF-8 > /etc/locale.gen && locale-gen
+
 git clone https://github.com/mongodb/mongo.git
 
 cd mongo
@@ -19,7 +21,7 @@ python2 buildscripts/scons.py mongod mongo mongos
 
 mkdir -p /tmp/archives/
 
-tar cfz "/tmp/archives/mongodb.tar.gz" --transform "s,^,/usr/bin/," mongo, mongod, mongos
+tar cfz "/tmp/archives/mongodb.tar.gz" --transform "s,^,/usr/bin/," mongo mongod mongos
 
 
 
