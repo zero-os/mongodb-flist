@@ -19,6 +19,8 @@ python2 buildscripts/scons.py mongod mongo mongos
 
 mkdir -p /tmp/archives/
 
+cd build/opt/mongo/
+
 tar cfz "/tmp/archives/mongodb.tar.gz" --transform "s,^,/usr/bin/," mongo mongod mongos
 
 
