@@ -1,6 +1,7 @@
 #!/bin/bash
 set -ex
 
+
 apt-get update
 apt-get install -y git
 apt-get install -y build-essential build-essential curl python-pip python-dev build-essential 
@@ -15,7 +16,9 @@ git checkout r3.6.5
 
 pip2 install -r buildscripts/requirements.txt
 
-python2 buildscripts/scons.py mongod mongo mongos
+jobs=$(($(grep -c 'bogomips' /proc/cpuinfo) + 1))
+
+python2 buildscripts/scons.py mongod mongo mongos -j $jobs
 
 mkdir -p /tmp/archives/
 
