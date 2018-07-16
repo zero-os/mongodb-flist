@@ -24,7 +24,30 @@ mkdir -p /tmp/archives/
 
 cd build/opt/mongo/
 
-tar cfz "/tmp/archives/mongodb.tar.gz" --transform "s,^,usr/bin/," mongo mongod mongos
+LIB_FOLDER=/tmp/lib/
+mkdir -p $LIB_FOLDER
+
+function collect_dependencies(){
+for lib in `ldd "$PATH_TO_BINARY" | cut -d'>' -f2 ` ; do
+   if [ -f "$lib" ] ; then
+        cp --parents "$lib" "$LIB_FOLDER"
+   fi  
+done
+}
+
+PATH_TO_BINARY=mongo
+collect_dependencies
+PATH_TO_BINARY=mongod
+collect_dependencies
+PATH_TO_BINARY=mongos
+collect_dependencies
+
+tar cf "/tmp/archives/mongodb.tar.gz" --transform "s,^,usr/bin/," mongo mongod mongos
+
+cd $LIB_FOLDER
+tar rvf "/tmp/archives/mongodb.tar.gz" --transform "s,^,usr/lib/," *
+
+
 
 
 
