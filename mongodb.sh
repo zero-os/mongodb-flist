@@ -1,7 +1,6 @@
 #!/bin/bash
 set -ex
 
-
 apt-get update
 apt-get install -y git
 apt-get install -y build-essential build-essential curl python-pip python-dev build-essential 
@@ -20,9 +19,10 @@ jobs=$(($(grep -c 'bogomips' /proc/cpuinfo) + 1))
 
 python2 buildscripts/scons.py mongod mongo mongos -j $jobs
 
-mkdir -p /tmp/archives/
-
 cd build/opt/mongo/
+strip -s mongo
+strip -s mongod
+strip -s mongos
 
 LIB_FOLDER=/tmp/lib/
 mkdir -p $LIB_FOLDER
@@ -42,6 +42,7 @@ collect_dependencies
 PATH_TO_BINARY=mongos
 collect_dependencies
 
+mkdir -p /tmp/archives/
 tar cf "/tmp/archives/mongodb.tar.gz" --transform "s,^,usr/bin/," mongo mongod mongos
 
 cd $LIB_FOLDER
